@@ -1,12 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../color_picker/material_color_picker.dart';
 import 'package:icon_stack_constructor/src/gallery/gallery_view.dart';
 import '../settings/settings_view.dart';
-//import 'icon_stack.dart';
 import 'package:get/get.dart';
 import 'package:icon_stack_constructor/src/resizable/resizable_widget_controller.dart';
 import 'package:icon_stack_constructor/src/resizable/resizable_widget.dart';
+import 'package:provider/provider.dart';
 
 import 'icon_stack.dart';
 
@@ -47,17 +48,38 @@ class _SampleItemListViewState extends State<SampleItemListView> {
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: onTap,
-          child: Row(
-            children: [
-              IconStackWidget(
-                iconStack,
-                key: iconStackKey,
+        child: Row(
+          children: [
+            ChangeNotifierProvider.value(
+              value: iconStack,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: onTap,
+                child: IconStackWidget(
+                  iconStack,
+                  key: iconStackKey,
+                ),
               ),
-            ],
-          ),
+            ),
+            Column(
+              children: [
+                MaterialColorPicker(
+                  circleSize: 30,
+                  onColorChange: (Color color) {
+                    if (currentIconIndex >= 0) {
+                      iconStack.icons[currentIconIndex].color = color;
+                      iconStack.notify();
+                      //setState(() {});
+                    }
+                  },
+                  onMainColorChange: (ColorSwatch? color) {
+                    // Handle main color changes
+                  },
+                  //selectedColor: ,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -66,7 +88,7 @@ class _SampleItemListViewState extends State<SampleItemListView> {
   void onTap() {
     if (currentIconIndex != -1) {
       currentIconIndex = -1;
-      setState(() {});
+      iconStack.notify();
     }
   }
 
@@ -88,7 +110,7 @@ class _SampleItemListViewState extends State<SampleItemListView> {
         ),
       );
       currentIconIndex = iconStack.icons.length - 1;
-      setState(() {});
+      iconStack.notify();
     }
   }
 }
@@ -106,6 +128,8 @@ class IconStackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconStackIcons = context.watch<IconStack>().icons;
+
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
@@ -115,7 +139,7 @@ class IconStackWidget extends StatelessWidget {
           ),
         ),
         child: Stack(
-            children: iconStack.icons
+            children: iconStackIcons
                 .asMap()
                 .entries
                 .map((entry) =>

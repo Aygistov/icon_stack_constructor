@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 int currentIconIndex = -1;
+Color currentIconColor = Colors.black;
 
 IconStack iconStack = IconStack(icons: [
   PositionedIcon(
@@ -18,7 +19,7 @@ class PositionedIcon {
   double size;
   double x;
   double y;
-  final Color? color;
+  Color? color;
 
   PositionedIcon({
     required this.icon,
@@ -29,7 +30,10 @@ class PositionedIcon {
   });
 }
 
-class IconStack {
+class IconStack extends ChangeNotifier {
   final List<PositionedIcon> icons;
   IconStack({required this.icons});
+  void notify() {
+    notifyListeners();
+  }
 }
