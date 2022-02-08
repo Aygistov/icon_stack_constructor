@@ -27,7 +27,6 @@ class FontAwesomeGalleryHomeState extends State<FontAwesomeGalleryApp> {
             _searchTerm.isEmpty ||
             icon.name.toLowerCase().contains(_searchTerm.toLowerCase()))
         .toList();
-    //final orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
       appBar: _isSearching ? _searchBar(context) : _titleBar(),

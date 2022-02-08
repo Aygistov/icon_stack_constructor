@@ -1,11 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
+//import 'package:get/get.dart';
 import 'package:icon_stack_constructor/src/icon_stack/icon_stack.dart';
 import 'package:icon_stack_constructor/src/icon_stack/icon_stack_view.dart';
 
-class ResizableWidgetController extends GetxController {
+import '../color_picker/material_color_picker.dart';
+
+class ResizableWidgetController {
   static const _minSize = 0.05;
   double _a(double x, double s) {
     return x * s;
@@ -37,52 +39,53 @@ class ResizableWidgetController extends GetxController {
   }
 
   double _scale() {
-    return _stackHeight() * (1 - iconStack.icons[currentIconIndex].size);
+    return _stackHeight() *
+        (1 - iconStack.icons[iconStack.currentIconIndex].size);
   }
 
   void onTopLeftDrag(dx, dy) {
-    if (iconStack.icons[currentIconIndex].x == 0 && dx + dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].x == 0 && dx + dy < 0) {
       return;
     }
-    if (iconStack.icons[currentIconIndex].y == 0 && dx + dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].y == 0 && dx + dy < 0) {
       return;
     }
 
     final _newSizeValue =
-        _newSize(iconStack.icons[currentIconIndex].size, dx, dy);
+        _newSize(iconStack.icons[iconStack.currentIconIndex].size, dx, dy);
     if (_newSizeValue < _minSize) {
       return;
     }
 
     final scale = _scale();
-    iconStack.icons[currentIconIndex].size = _newSizeValue;
-    iconStack.icons[currentIconIndex].x =
-        _newA(iconStack.icons[currentIconIndex].x, scale, dx, dy);
-    iconStack.icons[currentIconIndex].y =
-        _newA(iconStack.icons[currentIconIndex].y, scale, dx, dy);
-    update();
+    iconStack.icons[iconStack.currentIconIndex].size = _newSizeValue;
+    iconStack.icons[iconStack.currentIconIndex].x =
+        _newA(iconStack.icons[iconStack.currentIconIndex].x, scale, dx, dy);
+    iconStack.icons[iconStack.currentIconIndex].y =
+        _newA(iconStack.icons[iconStack.currentIconIndex].y, scale, dx, dy);
+    iconStack.notify();
   }
 
   void onTopRightDrag(dx, dy) {
-    if (iconStack.icons[currentIconIndex].x == 1 && -dx + dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].x == 1 && -dx + dy < 0) {
       return;
     }
-    if (iconStack.icons[currentIconIndex].y == 0 && -dx + dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].y == 0 && -dx + dy < 0) {
       return;
     }
     final _newSizeValue =
-        _newSize(iconStack.icons[currentIconIndex].size, -dx, dy);
+        _newSize(iconStack.icons[iconStack.currentIconIndex].size, -dx, dy);
     if (_newSizeValue < _minSize) {
       return;
     }
     final scale = _scale();
-    iconStack.icons[currentIconIndex].size = _newSizeValue;
+    iconStack.icons[iconStack.currentIconIndex].size = _newSizeValue;
 
-    iconStack.icons[currentIconIndex].x =
-        _newB(iconStack.icons[currentIconIndex].x, scale, -dx, dy);
-    iconStack.icons[currentIconIndex].y =
-        _newA(iconStack.icons[currentIconIndex].y, scale, -dx, dy);
-    update();
+    iconStack.icons[iconStack.currentIconIndex].x =
+        _newB(iconStack.icons[iconStack.currentIconIndex].x, scale, -dx, dy);
+    iconStack.icons[iconStack.currentIconIndex].y =
+        _newA(iconStack.icons[iconStack.currentIconIndex].y, scale, -dx, dy);
+    iconStack.notify();
   }
 
   void onCenterDrag(dx, dy) {
@@ -90,66 +93,67 @@ class ResizableWidgetController extends GetxController {
     if (scale == 0) {
       return;
     }
-    iconStack.icons[currentIconIndex].x =
-        max(0, min(1, iconStack.icons[currentIconIndex].x + dx / scale));
-    iconStack.icons[currentIconIndex].y =
-        max(0, min(1, iconStack.icons[currentIconIndex].y + dy / scale));
-    update();
+    iconStack.icons[iconStack.currentIconIndex].x = max(
+        0, min(1, iconStack.icons[iconStack.currentIconIndex].x + dx / scale));
+    iconStack.icons[iconStack.currentIconIndex].y = max(
+        0, min(1, iconStack.icons[iconStack.currentIconIndex].y + dy / scale));
+    iconStack.notify();
   }
 
   void onBottomLeftDrag(dx, dy) {
-    if (iconStack.icons[currentIconIndex].x == 0 && dx - dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].x == 0 && dx - dy < 0) {
       return;
     }
-    if (iconStack.icons[currentIconIndex].y == 1 && dx - dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].y == 1 && dx - dy < 0) {
       return;
     }
     final _newSizeValue =
-        _newSize(iconStack.icons[currentIconIndex].size, dx, -dy);
+        _newSize(iconStack.icons[iconStack.currentIconIndex].size, dx, -dy);
     if (_newSizeValue < _minSize) {
       return;
     }
     final scale = _scale();
-    iconStack.icons[currentIconIndex].size = _newSizeValue;
-    iconStack.icons[currentIconIndex].x =
-        _newA(iconStack.icons[currentIconIndex].x, scale, dx, -dy);
-    iconStack.icons[currentIconIndex].y =
-        _newB(iconStack.icons[currentIconIndex].y, scale, dx, -dy);
-    update();
+    iconStack.icons[iconStack.currentIconIndex].size = _newSizeValue;
+    iconStack.icons[iconStack.currentIconIndex].x =
+        _newA(iconStack.icons[iconStack.currentIconIndex].x, scale, dx, -dy);
+    iconStack.icons[iconStack.currentIconIndex].y =
+        _newB(iconStack.icons[iconStack.currentIconIndex].y, scale, dx, -dy);
+    iconStack.notify();
   }
 
   void onBottomRightDrag(dx, dy) {
-    if (iconStack.icons[currentIconIndex].x == 1 && -dx - dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].x == 1 && -dx - dy < 0) {
       return;
     }
-    if (iconStack.icons[currentIconIndex].y == 1 && -dx - dy < 0) {
+    if (iconStack.icons[iconStack.currentIconIndex].y == 1 && -dx - dy < 0) {
       return;
     }
     final _newSizeValue =
-        _newSize(iconStack.icons[currentIconIndex].size, -dx, -dy);
+        _newSize(iconStack.icons[iconStack.currentIconIndex].size, -dx, -dy);
     if (_newSizeValue < _minSize) {
       return;
     }
     final scale = _scale();
-    iconStack.icons[currentIconIndex].size = _newSizeValue;
+    iconStack.icons[iconStack.currentIconIndex].size = _newSizeValue;
 
-    iconStack.icons[currentIconIndex].x =
-        _newB(iconStack.icons[currentIconIndex].x, scale, -dx, -dy);
-    iconStack.icons[currentIconIndex].y =
-        _newB(iconStack.icons[currentIconIndex].y, scale, -dx, -dy);
-    update();
+    iconStack.icons[iconStack.currentIconIndex].x =
+        _newB(iconStack.icons[iconStack.currentIconIndex].x, scale, -dx, -dy);
+    iconStack.icons[iconStack.currentIconIndex].y =
+        _newB(iconStack.icons[iconStack.currentIconIndex].y, scale, -dx, -dy);
+    iconStack.notify();
   }
 
   void onTap() {
-    update();
+    iconStack.notify();
+    colorPickerNotifier.notify();
   }
 
   void onDoubleTap() {
-    if (iconStack.icons[currentIconIndex].size == 1) {
-      iconStack.icons[currentIconIndex].size = 0.1;
+    if (iconStack.icons[iconStack.currentIconIndex].size == 1) {
+      iconStack.icons[iconStack.currentIconIndex].size = 0.1;
     } else {
-      iconStack.icons[currentIconIndex].size = 1;
+      iconStack.icons[iconStack.currentIconIndex].size = 1;
     }
-    update();
+    iconStack.notify();
   }
 }
