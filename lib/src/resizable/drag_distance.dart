@@ -27,18 +27,19 @@ class _DragDistanceState extends State<DragDistance> {
   double initY = 0;
 
   void _handleDrag(DragStartDetails details) {
-    currentIconIndex = widget.iconIndex;
+    iconStack.currentIconIndex = widget.iconIndex;
     initX = details.globalPosition.dx;
     initY = details.globalPosition.dy;
   }
 
   void _handleTap() {
-    currentIconIndex = widget.iconIndex;
+    iconStack.currentIconIndex = widget.iconIndex;
     widget.onTap();
+    iconStack.notify();
   }
 
   void _handleDoubleTap() {
-    currentIconIndex = widget.iconIndex;
+    iconStack.currentIconIndex = widget.iconIndex;
     widget.onDoubleTap!();
   }
 

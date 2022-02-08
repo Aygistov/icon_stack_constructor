@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../color_picker/material_color_picker.dart';
 import 'package:icon_stack_constructor/src/gallery/gallery_view.dart';
 import '../settings/settings_view.dart';
-import 'package:get/get.dart';
 import 'package:icon_stack_constructor/src/resizable/resizable_widget_controller.dart';
 import 'package:icon_stack_constructor/src/resizable/resizable_widget.dart';
 import 'package:provider/provider.dart';
@@ -40,12 +39,50 @@ class _SampleItemListViewState extends State<SampleItemListView> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _navigateAndDisplaySelection(context);
-        },
-        tooltip: 'Add icon',
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                _navigateAndDisplaySelection(context);
+              },
+              tooltip: 'Add icon',
+              child: const Icon(Icons.add),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                _deleteIcon(context);
+              },
+              tooltip: 'Delete icon',
+              child: const Icon(Icons.delete),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                _upIcon(context);
+              },
+              tooltip: 'Up',
+              child: const Icon(Icons.upcoming),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                _downIcon(context);
+              },
+              tooltip: 'Down',
+              child: const Icon(Icons.downhill_skiing),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Row(
@@ -63,19 +100,30 @@ class _SampleItemListViewState extends State<SampleItemListView> {
             ),
             Column(
               children: [
-                MaterialColorPicker(
-                  circleSize: 30,
-                  onColorChange: (Color color) {
-                    if (currentIconIndex >= 0) {
-                      iconStack.icons[currentIconIndex].color = color;
-                      iconStack.notify();
-                      //setState(() {});
-                    }
-                  },
-                  onMainColorChange: (ColorSwatch? color) {
-                    // Handle main color changes
-                  },
-                  //selectedColor: ,
+                ChangeNotifierProvider.value(
+                  value: iconStack,
+                  child: ChangeNotifierProvider.value(
+                    value: colorPickerNotifier,
+                    child: MaterialColorPicker(
+                      circleSize: 30,
+                      onColorChange: (Color color) {
+                        if (iconStack.currentIconIndex != -1) {
+                          iconStack.icons[iconStack.currentIconIndex].color =
+                              color;
+                          iconStack.notify();
+                          //setState(() {});
+                        }
+                      },
+                      onMainColorChange: (ColorSwatch? color) {
+                        // Handle main color changes
+                      },
+                      /*
+                      selectedColor: iconStack.currentIconIndex == -1
+                          ? null
+                          : context.watch<IconStack>().currentIconColor;
+                          */
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -86,8 +134,9 @@ class _SampleItemListViewState extends State<SampleItemListView> {
   }
 
   void onTap() {
-    if (currentIconIndex != -1) {
-      currentIconIndex = -1;
+    if (iconStack.currentIconIndex != -1) {
+      iconStack.currentIconIndex = -1;
+
       iconStack.notify();
     }
   }
@@ -109,9 +158,50 @@ class _SampleItemListViewState extends State<SampleItemListView> {
           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
         ),
       );
-      currentIconIndex = iconStack.icons.length - 1;
+      iconStack.currentIconIndex = iconStack.icons.length - 1;
       iconStack.notify();
     }
+  }
+}
+
+void _deleteIcon(BuildContext context) {
+  if (iconStack.currentIconIndex != -1) {
+    iconStack.icons.removeAt(iconStack.currentIconIndex);
+    iconStack.currentIconIndex = -1;
+    iconStack.notify();
+  }
+}
+
+void _upIcon(BuildContext context) {
+  if (iconStack.currentIconIndex != -1) {
+    iconStack.icons
+        .move(iconStack.currentIconIndex, iconStack.currentIconIndex + 1);
+    iconStack.currentIconIndex = iconStack.currentIconIndex + 1;
+    iconStack.notify();
+  }
+}
+
+void _downIcon(BuildContext context) {
+  if (iconStack.currentIconIndex != -1) {
+    iconStack.icons
+        .move(iconStack.currentIconIndex, iconStack.currentIconIndex - 1);
+    iconStack.currentIconIndex = iconStack.currentIconIndex - 1;
+
+    iconStack.notify();
+  }
+}
+
+extension MoveElement<T> on List<T> {
+  void move(int from, int to) {
+    RangeError.checkValidIndex(from, this, "from", length);
+    RangeError.checkValidIndex(to, this, "to", length);
+    var element = this[from];
+    if (from < to) {
+      setRange(from, to, this, from + 1);
+    } else {
+      setRange(to + 1, from + 1, this, to);
+    }
+    this[to] = element;
   }
 }
 
@@ -162,9 +252,7 @@ class PositionedIconWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final controller = Get.put(
-    ResizableWidgetController(),
-  );
+  final controller = ResizableWidgetController();
 
   @override
   Widget build(BuildContext context) {
