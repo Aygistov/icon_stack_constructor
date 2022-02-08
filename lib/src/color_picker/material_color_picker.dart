@@ -1,9 +1,12 @@
 import 'package:icon_stack_constructor/src/color_picker/circle_color.dart';
 import 'package:icon_stack_constructor/src/color_picker/colors.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:provider/provider.dart';
 
 import '../icon_stack/icon_stack.dart';
+=======
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
 
 class MaterialColorPicker extends StatefulWidget {
   final Color? selectedColor;
@@ -56,7 +59,10 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
     _initSelectedValue();
   }
 
+<<<<<<< HEAD
   @override
+=======
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
   @protected
   void didUpdateWidget(covariant MaterialColorPicker oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -66,7 +72,10 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
   void _initSelectedValue() {
     _colors = widget.colors ?? materialColors;
 
+<<<<<<< HEAD
     //final selectedColor = context.watch<IconStack>().currentIconColor;
+=======
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
     Color shadeColor = widget.selectedColor ?? _defaultValue;
     ColorSwatch? mainColor = _findMainColor(shadeColor);
 
@@ -83,9 +92,14 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
   }
 
   ColorSwatch? _findMainColor(Color shadeColor) {
+<<<<<<< HEAD
     for (final ColorSwatch mainColor in _colors) {
       if (_isShadeOfMain(mainColor, shadeColor)) return mainColor;
     }
+=======
+    for (final ColorSwatch mainColor in _colors)
+      if (_isShadeOfMain(mainColor, shadeColor)) return mainColor;
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
 
     return (shadeColor is ColorSwatch && _colors.contains(shadeColor))
         ? shadeColor
@@ -129,11 +143,14 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
   }
 
   List<Widget> _buildListMainColor(List<ColorSwatch> colors) {
+<<<<<<< HEAD
     final currentIconIndex = context.watch<IconStack>().currentIconIndex;
 
     if (currentIconIndex != -1) {
       _mainColor = _findMainColor(iconStack.icons[currentIconIndex].color!)!;
     }
+=======
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
     return [
       for (final color in colors)
         CircleColor(
@@ -163,11 +180,14 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
   }
 
   List<Widget> _buildListShadesColor(ColorSwatch color) {
+<<<<<<< HEAD
     final currentIconIndex = context.watch<IconStack>().currentIconIndex;
 
     if (currentIconIndex != -1) {
       _shadeColor = iconStack.icons[currentIconIndex].color!;
     }
+=======
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
     return [
       IconButton(
         icon: const Icon(Icons.arrow_back),
@@ -199,6 +219,7 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
     // Number of circle per line, depend on width and circleSize
     final int nbrCircleLine = width ~/ (widget.circleSize + widget.spacing);
 
+<<<<<<< HEAD
     final currentIconIndex = context.watch<IconStack>().currentIconIndex;
 
     return AbsorbPointer(
@@ -219,10 +240,23 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
           crossAxisCount: nbrCircleLine,
           children: listChildren,
         ),
+=======
+    return SizedBox(
+      width: width,
+      child: GridView.count(
+        shrinkWrap: widget.shrinkWrap,
+        physics: widget.physics,
+        padding: const EdgeInsets.all(16.0),
+        crossAxisSpacing: widget.spacing,
+        mainAxisSpacing: widget.spacing,
+        crossAxisCount: nbrCircleLine,
+        children: listChildren,
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
       ),
     );
   }
 }
+<<<<<<< HEAD
 
 ColorPickerNotifier colorPickerNotifier = ColorPickerNotifier();
 
@@ -231,3 +265,5 @@ class ColorPickerNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
+=======
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0

@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import '../color_picker/material_color_picker.dart';
 import 'package:icon_stack_constructor/src/gallery/gallery_view.dart';
 import '../settings/settings_view.dart';
+<<<<<<< HEAD
+=======
+import 'package:get/get.dart';
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
 import 'package:icon_stack_constructor/src/resizable/resizable_widget_controller.dart';
 import 'package:icon_stack_constructor/src/resizable/resizable_widget.dart';
 import 'package:provider/provider.dart';
@@ -100,6 +104,7 @@ class _SampleItemListViewState extends State<SampleItemListView> {
             ),
             Column(
               children: [
+<<<<<<< HEAD
                 ChangeNotifierProvider.value(
                   value: iconStack,
                   child: ChangeNotifierProvider.value(
@@ -124,6 +129,21 @@ class _SampleItemListViewState extends State<SampleItemListView> {
                           */
                     ),
                   ),
+=======
+                MaterialColorPicker(
+                  circleSize: 30,
+                  onColorChange: (Color color) {
+                    if (currentIconIndex >= 0) {
+                      iconStack.icons[currentIconIndex].color = color;
+                      iconStack.notify();
+                      //setState(() {});
+                    }
+                  },
+                  onMainColorChange: (ColorSwatch? color) {
+                    // Handle main color changes
+                  },
+                  //selectedColor: ,
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
                 ),
               ],
             ),
@@ -134,9 +154,14 @@ class _SampleItemListViewState extends State<SampleItemListView> {
   }
 
   void onTap() {
+<<<<<<< HEAD
     if (iconStack.currentIconIndex != -1) {
       iconStack.currentIconIndex = -1;
 
+=======
+    if (currentIconIndex != -1) {
+      currentIconIndex = -1;
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
       iconStack.notify();
     }
   }
@@ -158,6 +183,7 @@ class _SampleItemListViewState extends State<SampleItemListView> {
           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
         ),
       );
+<<<<<<< HEAD
       iconStack.currentIconIndex = iconStack.icons.length - 1;
       iconStack.notify();
     }
@@ -200,6 +226,10 @@ extension MoveElement<T> on List<T> {
       setRange(from, to, this, from + 1);
     } else {
       setRange(to + 1, from + 1, this, to);
+=======
+      currentIconIndex = iconStack.icons.length - 1;
+      iconStack.notify();
+>>>>>>> ff7a751468dc6dc978ca77efdbc3b8d64aa9bfb0
     }
     this[to] = element;
   }
