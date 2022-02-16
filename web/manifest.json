@@ -1,6 +1,6 @@
 {
-    "name": "skeleton",
-    "short_name": "skeleton",
+    "name": "icon stack constructor",
+    "short_name": "constructor",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

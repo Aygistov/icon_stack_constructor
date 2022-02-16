@@ -1,6 +1,6 @@
 {
-  "appTitle": "skeleton",
+  "appTitle": "icon stack constructor",
   "@appTitle": {
-    "description": "The title of the application"
+    "description": "Application for icon stack creation"
   }
 }

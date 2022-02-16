@@ -1,11 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-//import 'package:get/get.dart';
 import 'package:icon_stack_constructor/src/icon_stack/icon_stack.dart';
 import 'package:icon_stack_constructor/src/icon_stack/icon_stack_view.dart';
-
-import '../color_picker/material_color_picker.dart';
 
 class ResizableWidgetController {
   static const _minSize = 0.05;
@@ -145,7 +142,6 @@ class ResizableWidgetController {
 
   void onTap() {
     iconStack.notify();
-    colorPickerNotifier.notify();
   }
 
   void onDoubleTap() {

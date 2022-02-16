@@ -1,4 +1,4 @@
-# skeleton
+# icon stack constructor
 
 A new Flutter project.
 

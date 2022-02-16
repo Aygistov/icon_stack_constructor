@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'gallery/gallery_view.dart';
-import 'icon_stack/icon_stack_view.dart';
+//import 'icon_stack/icon_stack_view.dart';
+import 'icon_stack/icon_stack_list.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -44,10 +45,12 @@ class MyApp extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case FontAwesomeGalleryApp.routeName:
-                    return const FontAwesomeGalleryApp();
-                  case SampleItemListView.routeName:
+                    return FontAwesomeGalleryApp();
+                  //case IconStackView.routeName:
+                  // return IconStackView();
+                  case IconStackListView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return const IconStackListView();
                 }
               },
             );

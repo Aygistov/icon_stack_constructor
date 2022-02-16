@@ -49,6 +49,7 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
   late ColorSwatch _mainColor;
   late Color _shadeColor;
   bool _isMainSelection = true;
+  int _currentIconIndex = -1;
 
   @override
   void initState() {
@@ -66,7 +67,6 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
   void _initSelectedValue() {
     _colors = widget.colors ?? materialColors;
 
-    //final selectedColor = context.watch<IconStack>().currentIconColor;
     Color shadeColor = widget.selectedColor ?? _defaultValue;
     ColorSwatch? mainColor = _findMainColor(shadeColor);
 
@@ -140,7 +140,7 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
           color: color,
           circleSize: widget.circleSize,
           onColorChoose: (_) => _onMainColorSelected(color),
-          isSelected: _mainColor == color,
+          isSelected: _mainColor == color && currentIconIndex != -1,
           iconSelected: widget.iconSelected,
           elevation: widget.elevation,
         )
@@ -179,7 +179,7 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
           color: color,
           circleSize: widget.circleSize,
           onColorChoose: _onShadeColorSelected,
-          isSelected: _shadeColor == color,
+          isSelected: _shadeColor == color && currentIconIndex != -1,
           iconSelected: widget.iconSelected,
           elevation: widget.elevation,
         ),
@@ -188,6 +188,13 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final currentIconIndex = context.watch<IconStack>().currentIconIndex;
+
+    if (currentIconIndex != _currentIconIndex) {
+      _isMainSelection = true;
+      _currentIconIndex = currentIconIndex;
+    }
+
     final listChildren = _isMainSelection || !widget.allowShades
         ? _buildListMainColor(_colors)
         : _buildListShadesColor(_mainColor);
@@ -195,11 +202,9 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
     // Size of dialog
     final double width = MediaQuery.of(context).size.width -
         MediaQuery.of(context).size.height +
-        50;
+        120;
     // Number of circle per line, depend on width and circleSize
     final int nbrCircleLine = width ~/ (widget.circleSize + widget.spacing);
-
-    final currentIconIndex = context.watch<IconStack>().currentIconIndex;
 
     return AbsorbPointer(
       absorbing: currentIconIndex == -1,
@@ -221,13 +226,5 @@ class _MaterialColorPickerState extends State<MaterialColorPicker> {
         ),
       ),
     );
-  }
-}
-
-ColorPickerNotifier colorPickerNotifier = ColorPickerNotifier();
-
-class ColorPickerNotifier extends ChangeNotifier {
-  void notify() {
-    notifyListeners();
   }
 }
