@@ -44,7 +44,7 @@ class FontAwesomeGalleryHomeState extends State<FontAwesomeGalleryApp> {
               )),
             ),
             height: double.infinity,
-            width: 200,
+            width: 205,
             child: ListView(
                 primary: false,
                 shrinkWrap: true,
@@ -74,7 +74,9 @@ class FontAwesomeGalleryHomeState extends State<FontAwesomeGalleryApp> {
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary,
                               width: 1),
-                          title: Text(entry.key),
+                          title: Text(fontsInfo[entry.key] == null
+                              ? entry.key
+                              : fontsInfo[entry.key]!['name'] ?? entry.key),
                           subtitle: Text(fontsInfo[entry.key] == null
                               ? ''
                               : ('by ' +
@@ -202,6 +204,12 @@ class FontAwesomeGalleryHomeState extends State<FontAwesomeGalleryApp> {
 }
 
 const fontsInfo = {
+  'Icons': {
+    'name': 'Material Design Icons',
+    //'package': 'fluttericon/iconic_icons.dart',
+    'license': 'Apache 2.0',
+    'author': 'Google',
+  },
   'Iconic': {
     'package': 'fluttericon/iconic_icons.dart',
     'license': 'SIL',
@@ -213,6 +221,7 @@ const fontsInfo = {
     'author': 'Designmodo for Smashing Magazine',
   },
   'MfgLabs': {
+    'name': 'MFG Labs',
     'package': 'fluttericon/mfg_labs_icons.dart',
     'license': 'SIL',
     'author': 'MFG Labs',
@@ -223,11 +232,13 @@ const fontsInfo = {
     'author': 'GitHub',
   },
   'FontAwesome': {
+    'name': 'Font Awesome',
     'package': 'fluttericon/font_awesome_icons.dart',
     'license': 'SIL',
     'author': 'Dave Gandy',
   },
   'FontAwesome5': {
+    'name': 'Font Awesome 5',
     'package': 'fluttericon/font_awesome5_icons.dart',
     'license': 'SIL',
     'author': 'Dave Gandy',
@@ -238,6 +249,7 @@ const fontsInfo = {
     'author': 'Daniel Bruce',
   },
   'LineariconsFree': {
+    'name': 'Linearicons Free',
     'package': 'fluttericon/linearicons_free_icons.dart',
     'license': 'CC BY-SA 4.0',
     'author': 'Perxis',
@@ -253,6 +265,7 @@ const fontsInfo = {
     'author': 'Alessio Atzeni',
   },
   'RpgAwesome': {
+    'name': 'RPG Awesome',
     'package': 'fluttericon/rpg_awesome_icons.dart',
     'license': 'SIL',
     'author': 'Daniel Howe & Ivan Montiel',
@@ -278,6 +291,7 @@ const fontsInfo = {
     'author': 'Sam Collins',
   },
   'ModernPictograms': {
+    'name': 'Modern Pictograms',
     'package': 'fluttericon/modern_pictograms_icons.dart',
     'license': 'SIL',
     'author': 'John Caserta',
@@ -288,6 +302,7 @@ const fontsInfo = {
     'author': 'Aristeides Stathopoulos',
   },
   'WebSymbols': {
+    'name': 'Web Symbols',
     'package': 'fluttericon/web_symbols_icons.dart',
     'license': 'SIL',
     'author': 'Just Be Nice studio',

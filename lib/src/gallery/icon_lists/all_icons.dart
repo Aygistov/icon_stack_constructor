@@ -20,8 +20,10 @@ import 'zocial_icons.dart';
 import 'modern_pictograms_icons.dart';
 import 'elusive_icons.dart';
 import 'web_symbols_icons.dart';
+import 'material_icons.dart';
 
 final allIcons = <ExampleIcon>[
+  ...material_icons,
   ...iconic_icons,
   ...linecons_icons,
   ...mfg_labs_icons,
