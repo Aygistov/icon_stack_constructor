@@ -115,6 +115,18 @@ class IconStack extends ChangeNotifier {
     }
     return packages;
   }
+
+  String dependences() {
+    var dependences = '';
+
+    for (var element in icons) {
+      if (element.icon.fontFamily != 'MaterialIcons') {
+        dependences = 'dependencies: \n  fluttericon: ^2.0.0';
+        return dependences;
+      }
+    }
+    return dependences;
+  }
 }
 
 @HiveType(typeId: 2)

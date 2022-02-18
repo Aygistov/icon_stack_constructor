@@ -417,50 +417,6 @@ class IconStackCodeWidget extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          //flex: 5,
-          child: Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  width: 1,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            padding: const EdgeInsets.all(20.0),
-            width: width,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: SelectableText(
-                      iconStack.packages(),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Tooltip(
-                    message: 'Copy packages import code to clipboard',
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(20),
-                      ),
-                      onPressed: () {
-                        Clipboard.setData(
-                            ClipboardData(text: iconStack.packages()));
-                      },
-                      child: const Icon(Icons.copy),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
           //flex: 10,
           child: Container(
             decoration: const BoxDecoration(
@@ -504,6 +460,91 @@ class IconStackCodeWidget extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+        Expanded(
+          //flex: 5,
+          child: Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  width: 1,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            padding: const EdgeInsets.all(20.0),
+            width: width,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: SelectableText(
+                      iconStack.packages(),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Tooltip(
+                    message: 'Copy packages import code to clipboard',
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(20),
+                      ),
+                      onPressed: () {
+                        Clipboard.setData(
+                            ClipboardData(text: iconStack.packages()));
+                      },
+                      child: const Icon(Icons.copy),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                width: 1,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          padding: const EdgeInsets.all(20.0),
+          width: width,
+          child: Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: SelectableText(
+                    iconStack.dependences(),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Tooltip(
+                  message: 'Copy dependences import code to clipboard',
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(20),
+                    ),
+                    onPressed: () {
+                      Clipboard.setData(
+                          ClipboardData(text: iconStack.dependences()));
+                    },
+                    child: const Icon(Icons.copy),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
