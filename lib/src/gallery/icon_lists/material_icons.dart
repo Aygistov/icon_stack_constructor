@@ -661,7 +661,6 @@ final material_icons = <ExampleIcon>[
   ExampleIcon(Icons.picture_in_picture, "Icons", "picture_in_picture"),
   ExampleIcon(Icons.picture_in_picture_alt, "Icons", "picture_in_picture_alt"),
   ExampleIcon(Icons.pie_chart, "Icons", "pie_chart"),
-  ExampleIcon(Icons.pie_chart_outlined, "Icons", "pie_chart_outlined"),
   ExampleIcon(Icons.pin_drop, "Icons", "pin_drop"),
   ExampleIcon(Icons.place, "Icons", "place"),
   ExampleIcon(Icons.play_arrow, "Icons", "play_arrow"),
